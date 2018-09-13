@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-import time
+import time, threading
 
 from bottle import request, route, run, static_file, template, response
 
@@ -11,8 +11,39 @@ GPIO.setmode(GPIO.BCM)
 WHEELS_PIN1 = 7
 WHEELS_PIN2 = 8
 WHEELS_PIN3 = 9
+EYES_LEFT_PIN = 3
+EYES_RIGHT_PIN = 2
+ANTENNA = 4
 
 TIMEOUT = 5
+TIMEOUT_ANTENNA = 0.5
+
+
+def setup_eyes():
+    print("Eyes lights")
+    GPIO.setup([EYES_LEFT_PIN, EYES_RIGHT_PIN], GPIO.OUT)
+    GPIO.output([EYES_LEFT_PIN, EYES_RIGHT_PIN], GPIO.HIGH)
+    return
+
+
+def blink_antenna():
+    GPIO.setup([ANTENNA], GPIO.OUT)
+    while True:
+       GPIO.output([ANTENNA], GPIO.HIGH)
+       time.sleep(TIMEOUT_ANTENNA)
+       GPIO.output([ANTENNA], GPIO.LOW)
+       time.sleep(TIMEOUT_ANTENNA)
+    return
+
+def setup_antenna():
+
+    threads = []
+    for i in range(5):
+       t = threading.Thread(target=blink_antenna)
+       threads.append(t)
+       t.start()
+    time.sleep(TIMEOUT)
+
 
 def enable_cors():
     response.headers['Access-Control-Allow-Origin'] = '*'
@@ -112,4 +143,7 @@ def blinkLight():
     finally:
         GPIO.cleanup()
 
+
+setup_eyes()
+setup_antenna()
 run(host='0.0.0.0', port=80)
