@@ -70,7 +70,7 @@ def moveForward():
     GPIO.output([WHEELS_PIN1, WHEELS_PIN2, WHEELS_PIN3], GPIO.HIGH)
     time.sleep(TIMEOUT)
 
-    GPIO.cleanup([WHEELS_PIN1, WHEELS_PIN2, WHEELS_PIN3])
+    GPIO.output([WHEELS_PIN1, WHEELS_PIN2, WHEELS_PIN3], GPIO.LOW)
 
     print("Move forward end")
 
@@ -87,7 +87,7 @@ def moveBackward():
     GPIO.output([WHEELS_PIN3], GPIO.LOW)
     time.sleep(TIMEOUT)
 
-    GPIO.cleanup([WHEELS_PIN1, WHEELS_PIN2, WHEELS_PIN3])
+    GPIO.output([WHEELS_PIN1, WHEELS_PIN2, WHEELS_PIN3], GPIO.LOW)
 
     print("Move backward end")
 
@@ -104,7 +104,7 @@ def moveLeft():
     GPIO.output([WHEELS_PIN2, WHEELS_PIN3], GPIO.LOW)
     time.sleep(TIMEOUT)
 
-    GPIO.cleanup([WHEELS_PIN1, WHEELS_PIN2, WHEELS_PIN3])
+    GPIO.output([WHEELS_PIN1, WHEELS_PIN2, WHEELS_PIN3], GPIO.LOW)
 
     print("Move left end")
 
@@ -121,7 +121,7 @@ def moveRight():
     GPIO.output([WHEELS_PIN1, WHEELS_PIN3], GPIO.LOW)
     time.sleep(TIMEOUT)
 
-    GPIO.cleanup([WHEELS_PIN1, WHEELS_PIN2, WHEELS_PIN3])
+    GPIO.output([WHEELS_PIN1, WHEELS_PIN2, WHEELS_PIN3], GPIO.LOW)
 
     print("Move right end")
 
