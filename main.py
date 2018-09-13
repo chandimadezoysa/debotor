@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 
-from bottle import request, route, run, static_file, template
+from bottle import request, route, run, static_file, template, response
 
 # start with BCM
 GPIO.setmode(GPIO.BCM)
@@ -14,8 +14,14 @@ WHEELS_PIN3 = 9
 
 TIMEOUT = 5
 
+def enable_cors():
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'PUT, GET, POST, DELETE, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
+
 @route('/')
 def index():
+    enable_cors()
     return template('index.html')
 
 def wheelsSetup():
@@ -25,6 +31,7 @@ def wheelsSetup():
 
 @route('/forward')
 def moveForward():
+    enable_cors()
     wheelsSetup()
 
     print("Move forward start")
@@ -40,6 +47,7 @@ def moveForward():
 
 @route('/backward')
 def moveBackward():
+    enable_cors()
     wheelsSetup()
 
     print("Move backward start")
@@ -56,6 +64,7 @@ def moveBackward():
 
 @route('/left')
 def moveLeft():
+    enable_cors()
     wheelsSetup()
 
     print("Move left start")
@@ -72,6 +81,7 @@ def moveLeft():
 
 @route('/right')
 def moveRight():
+    enable_cors()
     wheelsSetup()
 
     print("Move right start")
